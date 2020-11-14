@@ -32,4 +32,5 @@ import_config "#{Mix.env()}.exs"
 
 config :auth_app, :pow,
   user: AuthApp.Users.User,
-  repo: AuthApp.Repo
+  repo: AuthApp.Repo,
+  web_module: AuthAppWeb

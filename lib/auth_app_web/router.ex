@@ -10,6 +10,11 @@ defmodule AuthAppWeb.Router do
     plug :put_secure_browser_headers
   end
 
+  pipeline :protected do
+    plug Pow.Plug.RequireAuthenticated,
+      error_handler: Pow.Phoenix.PlugErrorHandler
+  end
+
   pipeline :api do
     plug :accepts, ["json"]
   end
@@ -24,7 +29,9 @@ defmodule AuthAppWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :index
+    resources "/tasks", TaskController
   end
+
 
   # Other scopes may use custom stacks.
   # scope "/api", AuthAppWeb do
