@@ -78,4 +78,14 @@ defmodule AuthAppWeb do
   defmacro __using__(which) when is_atom(which) do
     apply(__MODULE__, which, [])
   end
+
+  def mailer_view do
+    quote do
+      use Phoenix.View, root: "lib/auth_app_web/templates",
+                        namespace: AuthAppWeb
+
+      use Phoenix.HTML
+    end
+  end
+
 end

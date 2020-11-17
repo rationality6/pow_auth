@@ -4,6 +4,10 @@ defmodule AuthAppWeb.TaskController do
   alias AuthApp.Tasks
   alias AuthApp.Tasks.Task
 
+  require AuthApp.Mailer
+  require AuthApp.Email
+
+  require IEx
   def index(conn, _params) do
     tasks = Tasks.list_tasks()
     render(conn, "index.html", tasks: tasks)
@@ -51,9 +55,16 @@ defmodule AuthAppWeb.TaskController do
     end
   end
 
+  defp send_removal_notification do
+    AuthApp.Email.movie_removal_email()
+    |> AuthApp.Mailer.deliver_later()
+  end
+
   def delete(conn, %{"id" => id}) do
     task = Tasks.get_task!(id)
     {:ok, _task} = Tasks.delete_task(task)
+
+    send_removal_notification()
 
     conn
     |> put_flash(:info, "Task deleted successfully.")

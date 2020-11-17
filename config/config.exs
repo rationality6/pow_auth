@@ -33,4 +33,10 @@ import_config "#{Mix.env()}.exs"
 config :auth_app, :pow,
   user: AuthApp.Users.User,
   repo: AuthApp.Repo,
-  web_module: AuthAppWeb
+  web_module: AuthAppWeb,
+  extensions: [PowResetPassword, PowEmailConfirmation],
+  controller_callbacks: Pow.Extension.Phoenix.ControllerCallbacks,
+  mailer_backend: MyAppWeb.Pow.Mailer
+
+# config :auth_app, AuthApp.Mailer,
+#   adapter: Bamboo.LocalAdapter
