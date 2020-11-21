@@ -1,6 +1,7 @@
 defmodule AuthApp.Email do
-  import Bamboo.Email
+  use Bamboo.Phoenix, view: AuthApp.EmailView
 
+  @spec welcome_email :: Bamboo.Email.t()
   def welcome_email do
     new_email(
       to: "codepawn@icloud.com",
@@ -11,7 +12,7 @@ defmodule AuthApp.Email do
     )
   end
 
-  def movie_removal_email do
+  def movie_removal_email() do
     new_email(
       from: "codepawn@icloud.com",
       to: "codepawn@icloud.com",

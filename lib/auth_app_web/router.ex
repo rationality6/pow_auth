@@ -1,6 +1,7 @@
 defmodule AuthAppWeb.Router do
   use AuthAppWeb, :router
   use Pow.Phoenix.Router
+
   use Pow.Extension.Phoenix.Router,
     extensions: [PowResetPassword, PowEmailConfirmation]
 
@@ -21,10 +22,9 @@ defmodule AuthAppWeb.Router do
     plug :accepts, ["json"]
   end
 
-  if Mix.env == :dev do
+  if Mix.env() == :dev do
     forward "/emails", Bamboo.SentEmailViewerPlug
   end
-
 
   scope "/" do
     pipe_through :browser
@@ -34,12 +34,11 @@ defmodule AuthAppWeb.Router do
   end
 
   scope "/", AuthAppWeb do
-    pipe_through :browser
+    pipe_through [:browser, :protected]
 
     get "/", PageController, :index
     resources "/tasks", TaskController
   end
-
 
   # Other scopes may use custom stacks.
   # scope "/api", AuthAppWeb do

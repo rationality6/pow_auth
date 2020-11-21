@@ -34,9 +34,10 @@ config :auth_app, :pow,
   user: AuthApp.Users.User,
   repo: AuthApp.Repo,
   web_module: AuthAppWeb,
-  extensions: [PowResetPassword, PowEmailConfirmation],
+  extensions: [PowResetPassword],
   controller_callbacks: Pow.Extension.Phoenix.ControllerCallbacks,
-  mailer_backend: MyAppWeb.Pow.Mailer
+  mailer_backend: AuthAppWeb.PowMailer,
+  web_mailer_module: AuthAppWeb
 
 # config :auth_app, AuthApp.Mailer,
 #   adapter: Bamboo.LocalAdapter
